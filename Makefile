@@ -1,17 +1,25 @@
-.PHONY: up down benchmark benchmark-operators benchmark-model-complexity all
+.PHONY: up down build benchmark-operators benchmark-model-complexity benchmark all clean
 
 up:
-	mkdir output && docker compose up -d || true
+	@mkdir -p output bin
+	@docker rm -f benchmark-openfga-postgres benchmark-openfga-openfga benchmark-openfga-migrate 2>/dev/null || true
+	@docker compose up -d
 
 down:
 	docker compose down || true
 
-benchmark-operators: up
-	node src/benchmark_operators.js
+build:
+	cd go && go mod tidy && go build -o ../bin/benchmark_operators ./cmd/benchmark_operators && go build -o ../bin/benchmark_model_complexity ./cmd/benchmark_model_complexity
 
-benchmark-model-complexity: up
-	node src/benchmark_model_complexity.js
+benchmark-operators: up build
+	./bin/benchmark_operators
+
+benchmark-model-complexity: up build
+	./bin/benchmark_model_complexity
 
 benchmark: benchmark-operators benchmark-model-complexity
+
+clean:
+	rm -rf bin output
 
 all: benchmark

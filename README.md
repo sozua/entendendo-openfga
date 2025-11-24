@@ -2,16 +2,25 @@
 
 ### Requisitos
 
-- **Node.js** (v20+ recomendado)
-- **pnpm** (Gerenciador de pacotes)
+- **Go** (v1.21+ recomendado)
 - **Docker & Docker Compose** (Para executar o servidor OpenFGA)
 
-### Instalação
+### Estrutura do Projeto
 
-1. Instale as dependências:
-   ```bash
-   pnpm install
-   ```
+```
+go/
+├── cmd/                              # Entry points dos benchmarks
+│   ├── benchmark_operators/          # Benchmark de operadores
+│   └── benchmark_model_complexity/   # Benchmark de complexidade
+├── pkg/
+│   ├── benchmarks/                   # Funções de benchmark
+│   ├── client/                       # Cliente OpenFGA
+│   ├── config/                       # Configurações
+│   ├── scenarios/                    # Cenários de teste
+│   │   ├── operators/                # Cenários de operadores
+│   │   └── model_complexity/         # Cenários de complexidade
+│   └── utils/                        # Utilitários (seeder, charts)
+```
 
 ### Executando os Benchmarks
 
@@ -32,6 +41,8 @@ make benchmark
   make benchmark-model-complexity
   ```
 
-**Gerenciar a infraestrutura manualmente**
-- Iniciar OpenFGA: `make up`
-- Parar OpenFGA: `make down`
+### Outros comandos úteis
+- **Build apenas:** `make build`
+- **Iniciar OpenFGA:** `make up`
+- **Parar OpenFGA:** `make down`
+- **Limpar binários e outputs:** `make clean`

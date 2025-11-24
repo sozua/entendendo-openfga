@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16
-    container_name: postgres
+    container_name: benchmark-openfga-postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
@@ -15,7 +15,7 @@ services:
 
   migrate:
     image: openfga/openfga:latest
-    container_name: migrate
+    container_name: benchmark-openfga-migrate
     command: migrate
     environment:
       - OPENFGA_DATASTORE_ENGINE=postgres
@@ -26,7 +26,7 @@ services:
 
   openfga:
     image: openfga/openfga:latest
-    container_name: openfga
+    container_name: benchmark-openfga-openfga
     command: run
     environment:
       - OPENFGA_DATASTORE_ENGINE=postgres
