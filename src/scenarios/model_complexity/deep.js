@@ -14,7 +14,9 @@ const generator = async (fgaClient) => {
       relations: { next: { this: {} } },
       metadata: {
         relations: {
-          next: { directly_related_user_types: [{ type: nextType }] },
+          next: {
+            directly_related_user_types: [{ type: nextType }, { type: 'user' }],
+          },
         },
       },
     });

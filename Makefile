@@ -1,7 +1,7 @@
 .PHONY: up down benchmark benchmark-operators benchmark-model-complexity all
 
 up:
-	docker compose up -d || true
+	mkdir output && docker compose up -d || true
 
 down:
 	docker compose down || true
